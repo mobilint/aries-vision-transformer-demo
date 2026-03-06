@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type = Application
+Name = Vision Transformer
+Icon = vision-transformer-demo.png
+Exec = /usr/bin/env bash -lc 'cd "$HOME/aries-vision-transformer-demo" && ./run.sh'
+Terminal = true
