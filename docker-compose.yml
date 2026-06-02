@@ -1,0 +1,49 @@
+networks:
+  mblt_int:
+    external: true
+
+services:
+  aries_vision_transformer_frontend:
+    build:
+      context: ./frontend
+      dockerfile: frontend.Dockerfile
+
+    hostname: aries-vision-transformer-frontend
+
+    volumes:
+      - ./frontend:/app
+      - node_modules:/app/node_modules
+      - next:/app/.next
+
+    ports:
+      - 3000:3000
+
+    networks:
+      - mblt_int
+
+  aries_vision_transformer_backend:
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+
+    hostname: aries-vision-transformer-backend
+
+    privileged: true
+
+    environment:
+      - HF_HUB_OFFLINE=1
+
+    volumes:
+      - ./backend/src:/src
+      - ${HOME}/.cache/huggingface:/root/.cache/huggingface
+      - /dev:/dev
+
+    ports:
+      - 5000:5000
+
+    networks:
+      - mblt_int
+
+volumes:
+  node_modules:
+  next:
